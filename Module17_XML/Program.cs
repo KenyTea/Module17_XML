@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.IO;
+
 
 namespace Module17_XML
 
@@ -19,7 +21,9 @@ namespace Module17_XML
         {
             public string title { get; set; }
             public string Link { get; set; }
-
+            public string Description { get; set; }
+            public DateTime PubDate { get; set; }
+           
         }
         static void Main(string[] args)
         {
@@ -64,10 +68,19 @@ namespace Module17_XML
                             {
                                 hn.Link = i.InnerText;
                             }
-                           
+                            else if (i.Name == "description")
+                            {
+                                hn.Description = i.InnerText;
+                            }
+                            else if (i.Name == "pubDate")
+                            {
+                                hn.PubDate = DateTime.Parse(i.InnerText);
+                            }
 
-                           // Console.WriteLine("--->" + i.Name);
-                           // Console.WriteLine("------>" + i.InnerText);
+
+
+                            // Console.WriteLine("--->" + i.Name);
+                            // Console.WriteLine("------>" + i.InnerText);
                         }
                         habr.Add(hn);
                     }
@@ -83,6 +96,8 @@ namespace Module17_XML
                 Console.WriteLine(item.Link);
                 Console.WriteLine("");
             }
+
+            FileInfo fi = new FileInfo(Console.ReadLine());
         }
     }
 }
