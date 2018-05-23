@@ -42,6 +42,13 @@ namespace Module17_XML
             //doc.AppendChild(root);
             //doc.Save("UserAlex.xml");
 
+
+            /*1.	Прочитать содержимое XML файла со списком последних новостей по ссылке https://habrahabr.ru/rss/interesting/
+Создать класс Item со свойствами: Title, Link, Description, PubDate.
+Создать коллекцию типа List<Item> и записать в нее данные из файла.
+2.	На основании задания 1, сериализовать лист полученных объектов в XML и записать в файл.
+*/
+
             List<HabrNews> habr = new List<HabrNews>();
 
             XmlDocument doc = new XmlDocument();
@@ -76,9 +83,7 @@ namespace Module17_XML
                             {
                                 hn.PubDate = DateTime.Parse(i.InnerText);
                             }
-
-
-
+                    
                             // Console.WriteLine("--->" + i.Name);
                             // Console.WriteLine("------>" + i.InnerText);
                         }
@@ -97,7 +102,25 @@ namespace Module17_XML
                 Console.WriteLine("");
             }
 
-            FileInfo fi = new FileInfo(Console.ReadLine());
+            Directory.CreateDirectory(@"C:\ListDir\");
+
+            FileInfo fi = new FileInfo(@"C:\ListDir\List.txt");
+          
+            FileStream fst = fi.Create(); 
+            fst.Close();
+
+            StreamWriter sw = new StreamWriter(@"C:\ListDir\List.txt");
+            foreach (var item in habr)
+            {
+                sw.Write(item.title);
+                sw.Write(item.Link);
+                sw.Write(item.Description);
+                sw.Write(item.PubDate);
+                sw.WriteLine("\n");
+            }
+
+            sw.Close();
+
         }
     }
 }
